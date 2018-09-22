@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import SimpleReactComponent from "./app/SimpleReactComponent.jsx";
+import AvengersComponent from "./app/AvengersComponent.jsx";
 
 ReactDOM.render(
-    <SimpleReactComponent/>
+    <AvengersComponent/>
   ,document.getElementById("root")
 );
