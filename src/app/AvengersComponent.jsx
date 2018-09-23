@@ -30,9 +30,9 @@ export default class AvengersComponent extends Component{
   async getData() {
     const response = await axios.get('http://gateway.marvel.com/v1/public/characters/1009165' + this.apiKey);
 
-    const items = response.data.data.results[0].series.items;
+    const series = response.data.data.results[0].series.items;
 
-    items.forEach((serie) => {
+    series.forEach((serie) => {
       this.getSerieThumbnail(serie);
     });
   }
@@ -40,14 +40,14 @@ export default class AvengersComponent extends Component{
   render(){
     return(
         <div>
-          {this.state.series.map(function(serie, i){
+          {this.state.series.map((serie, i) => {
             return <ion-card key={i}>
                   <ion-card-header>
                       <ion-card-title>{serie.title}</ion-card-title>
                   </ion-card-header>
   
                   <ion-card-content>
-                      <img src={serie.img}/>
+                      <ion-img src={serie.img}/>
                   </ion-card-content>
               </ion-card>
             })}
