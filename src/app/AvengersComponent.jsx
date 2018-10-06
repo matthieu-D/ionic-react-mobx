@@ -1,20 +1,28 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import AvengersPresentationComponent from "./AvengersPresentationComponent.jsx";
+import { connect } from 'react-redux';
+
 import axios from 'axios';
 
-export default class AvengersComponent extends Component{
-  constructor() {
-    super();
+class AvengersComponent extends Component{
+  constructor(props, context) {
+    super(props);
+    
+    this.state = {}
+    this.store = context.store;
     this.apiKey = '?apikey=62fd825f7cda72881097e65913c376c5';
     this.size = '/standard_fantastic';
-    this.state = {
-      series: []
-    }
   }
    
   componentDidMount() {
     this.getData();
   }
 
+  componentWillReceiveProps(newProps) {
+    // this.setState()...
+  }
+  
   async getSerieThumbnail(serie) {
     const response = await axios.get(serie.resourceURI + this.apiKey)
 
@@ -24,7 +32,7 @@ export default class AvengersComponent extends Component{
     const title = serieInformation.title;
     const img = thumbnail.path + this.size + '.' + thumbnail.extension;
 
-    this.setState({series: [...this.state.series, { img:img, title: title}]});
+    this.store.dispatch({type:"ADD_AVENGERS_SERIE", payload:{ img:img, title: title}})
   } 
 
   async getData() {
@@ -39,19 +47,23 @@ export default class AvengersComponent extends Component{
 
   render(){
     return(
-        <div>
-          {this.state.series.map((serie, i) => {
-            return <ion-card key={i}>
-                  <ion-card-header>
-                      <ion-card-title>{serie.title}</ion-card-title>
-                  </ion-card-header>
-  
-                  <ion-card-content>
-                      <ion-img src={serie.img}/>
-                  </ion-card-content>
-              </ion-card>
-            })}
-        </div>
+      <div>
+        <AvengersPresentationComponent avengersSerieList={this.props.avengersSerieList}/>
+      </div>
     );
   }
 }
+
+AvengersComponent.contextTypes = {
+  store: PropTypes.object
+};
+
+const mapStateToProps = state => {
+  return {
+    avengersSerieList: state.avengersSerieList
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(AvengersComponent) 
