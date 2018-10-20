@@ -2,7 +2,21 @@ const reactRule = [{
   test: /\.jsx$/,
   loader: "babel-loader",
   options: {
-    presets: ['react']
+    presets: ['@babel/react'],
+    plugins: [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ],
+    ]
   }
 }];
 

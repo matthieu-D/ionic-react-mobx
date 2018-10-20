@@ -5,6 +5,8 @@
     "baseUrl": "./",
     "module": "es2015"
   },
+  "emitDecoratorMetadata": true,
+  "experimentalDecorators": true,
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
